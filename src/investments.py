@@ -29,7 +29,7 @@ def dichiarazione( cognome , nome,  url ):
 anno = 2014
 url= "http://patrimoni.openpolis.it/api/politici"
 print("Benvenuto in OpenPolis patrimoni script")
-print("Questo script scarica i dati delle dichiarazioni dei politici per l'anno "+str(anno)+" e li aggrega per formare una panoramica degli investimenti dei politici nelle aziende cosi come presenti nelle dichiarazioni dei redditi dei politici")
+print("Questo script scarica i dati delle dichiarazioni dei redditi dei politici per l'anno "+str(anno)+" e li aggrega per formare una panoramica degli investimenti degli stessi")
 print("\n Scaricamento dati da "+url +" in corso")
 r = requests.get(url)
 print("Elaborazione in corso...")
