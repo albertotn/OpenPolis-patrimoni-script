@@ -21,20 +21,25 @@ def dichiarazione( cognome , nome,  url ):
         for p in part:
             #print(p["denominazione"]+","+p["numero_azioni_quote"])
             s = s+cognome+separator+nome+separator+p["denominazione"]+separator
-            # +separator+p["numero_azioni_quote"]
             investments.append(p["denominazione"])
     return s
 
 
 # main
-r = requests.get("http://patrimoni.openpolis.it/api/politici")
+anno = 2014
+url= "http://patrimoni.openpolis.it/api/politici"
+print("Benvenuto in OpenPolis patrimoni script")
+print("Questo script scarica i dati delle dichiarazioni dei politici per l'anno "+str(anno)+" e li aggrega per formare una panoramica degli investimenti dei politici nelle aziende cosi come presenti nelle dichiarazioni dei redditi dei politici")
+print("\n Scaricamento dati da "+url +" in corso")
+r = requests.get(url)
+print("Elaborazione in corso...")
 data = r.json()
-first = data[0]
+print("Numero politici presenti "+str(len(data)))
 for e in data:
     s = ""
     ds = e["dichiarazioni"]
     for d in ds:
-        if d["dichiarazione"]is not None and d["anno"] == 2014 :
+        if d["dichiarazione"]is not None and d["anno"] == anno :
             s = ""
             s = s+dichiarazione(e["cognome"],e["nome"],d["dichiarazione"])
             #if s is not None:
@@ -43,9 +48,12 @@ icount = {}
 for i in investments:
     # print(i)
     icount[i] = icount.get(i, 0) + 1
+print("Numero aziende "+str(len(icount)))
 # get investments as a set
 s = set(investments)
+print("Aggregazione dati in corso.. \n")
 for inv in s:
-    print(inv+";"+str(icount.get(inv)))   
+    if inv is not None: 
+        print(inv+";"+str(icount.get(inv)))   
 
-
+print("Lavoro completato")
